@@ -3,6 +3,11 @@ import React from "react"
 
 const handleSubmit = (e) => {
   e.preventDefault()
+
+  const formData = new FormData(e.target)
+  for (const [key, value] of formData.entries()) {
+    console.log(key, value)
+  }
 }
 
 const page = () => {
