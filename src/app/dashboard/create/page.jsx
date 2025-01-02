@@ -18,10 +18,29 @@ const page = () => {
           type="text"
           name="title"
           id="title"
-          className="shadow border rounded w-full p-3 mb-7 text-gray-700"
+          className="shadow border rounded w-full p-3 mb-7 text-gray-700 focus:outline-slate-400"
           placeholder="Title"
           required
         />
+        <label htmlFor="markdownArticle" className="f-label">
+          Write your article using Markdown - do not repeat the title above
+        </label>
+        <a
+          href="https://www.markdownguide.org/cheat-sheet/"
+          target="_blank"
+          className="block mb-4 text-blue-600"
+        >
+          How to use Markdown syntax ?
+        </a>
+        <textarea
+          name="markdownArticle"
+          id="markdownArticle"
+          required
+          className="min-h-44 text-xl shadow appearance-none border rounded w-full p-8 text-gray-700 mb-4 focus:outline-slate-400"
+        ></textarea>
+        <button className="min-w-44 bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded border-none mb-4 ">
+          Submit
+        </button>
       </form>
     </div>
   )
