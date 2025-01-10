@@ -1,8 +1,9 @@
+"use server"
 import { Post } from "@/lib/models/post"
 import { connectToDb } from "@/lib/utils/db/connectToDb"
 
 export const addPost = async (formData) => {
-  const [title, markdownArticle] = Object.fromEntries(formData)
+  const { title, markdownArticle } = Object.fromEntries(formData)
 
   try {
     await connectToDb()
