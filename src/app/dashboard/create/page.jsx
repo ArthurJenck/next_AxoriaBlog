@@ -1,12 +1,26 @@
 "use client"
+import { addPost } from "@/lib/serverActions/blog/postServerActions"
 import React from "react"
 
 const page = () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+
+    const formData = new FormData(e.target)
+    console.log(formData)
+
+    for (const [key, value] of formData.entries()) {
+      console.log(key, value)
+    }
+
+    const result = await addPost(formData)
+  }
+
   return (
     <div className="u-main-container bg-white p-7 mt-32 mb-44">
       <h1 className="text-4xl mb-4">Write an article 📝</h1>
 
-      <form className="pb-6">
+      <form onSubmit={handleSubmit} className="pb-6">
         <label htmlFor="title" className="f-label">
           Title
         </label>

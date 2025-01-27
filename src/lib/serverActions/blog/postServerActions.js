@@ -1,3 +1,5 @@
+"use server"
+import { Post } from "@/lib/models/post"
 import { connectToDb } from "@/lib/utils/db/connectToDb"
 
 export const addPost = async (formData) => {
@@ -11,9 +13,7 @@ export const addPost = async (formData) => {
       markdownArticle
     })
 
-    const savedPost = await newPost
-      .save()
-      .then(console.log("Successfully created post"))
+    const savedPost = await newPost.save().then(console.log("Post saved"))
     return { success: true, slug: savedPost.slug }
   } catch (error) {
     console.error("Error while creating post:", error)
