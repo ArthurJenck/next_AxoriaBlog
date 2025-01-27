@@ -12,3 +12,15 @@ export const getPost = async (slug) => {
     throw new Error("Failed to fetch post", error.message)
   }
 }
+
+export const getPosts = async () => {
+  try {
+    await connectToDb()
+
+    const posts = await Post.find()
+    return posts
+  } catch (error) {
+    console.error("Failed to get posts")
+    throw new Error("An error occurred while getting posts", error.message)
+  }
+}

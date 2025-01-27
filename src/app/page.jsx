@@ -1,23 +1,11 @@
+import { getPosts } from "@/lib/serverMethods/blog/postMethods"
 import { connectToDb } from "@/lib/utils/db/connectToDb"
 import Link from "next/link"
 
-const posts = [
-  {
-    author: "John Doe",
-    title: "5 CSS tricks"
-  },
-  {
-    author: "Victor Wallace",
-    title: "How to code a navbar"
-  },
-  {
-    author: "Bruce Willis",
-    title: "How to setup Typescript"
-  }
-]
-
-export default function Home() {
+export default async function Home() {
   connectToDb()
+
+  const posts = await getPosts()
 
   return (
     <div className="u-main-container u-padding-content-container">
@@ -29,17 +17,17 @@ export default function Home() {
         {posts.map((post, id) => {
           return (
             <li
-              key={`post-${id}`}
+              key={`${post.slug}`}
               className="rounded-sm shadow-md border
                             border-transparent hover:shadow-xl  hover:border-zinc-300"
             >
               <div className=" pt-5 px-5 pb-7">
                 <div className="flex items-baseline gap-x-4 text-xs">
                   <time
-                    dateTime={new Date().toISOString()}
+                    dateTime={new Date(post.createdAt).toISOString()}
                     className="text-gray-500 text-sm"
                   >
-                    {new Date().toLocaleDateString("en-EN", {
+                    {new Date(post.createdAt).toLocaleDateString("en-EN", {
                       year: "numeric",
                       month: "long",
                       day: "numeric"
@@ -49,11 +37,11 @@ export default function Home() {
                     href={`/categories/author/${post.author}`}
                     className="ml-auto text-base text-gray-700 hover:text-gray-600 whitespace-nowrap truncate"
                   >
-                    {post.author}
+                    {post.author ? post.author : "John doe"}
                   </Link>
                 </div>
                 <Link
-                  href={`/article/${post.title}`}
+                  href={`/article/${post.slug}`}
                   className="inline-block mt-6 text-xl font-semibold text-zinc-800 hover:text-zinc-600"
                 >
                   {post.title}
