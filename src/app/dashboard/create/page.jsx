@@ -10,10 +10,6 @@ const page = () => {
     e.preventDefault()
 
     const formData = new FormData(e.target)
-    console.log(formData)
-    for (const [key, value] of formData.entries()) {
-      console.log(key, value)
-    }
     const result = await addPost(formData)
   }
 
