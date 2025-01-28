@@ -1,20 +1,25 @@
 "use client"
 import { addPost } from "@/lib/serverActions/blog/postServerActions"
-import React from "react"
+import React, { useRef, useState } from "react"
 
 const page = () => {
+  const [tags, setTags] = useState(["css", "javascript"])
+  const tagInputRef = useRef(null)
+
   const handleSubmit = async (e) => {
     e.preventDefault()
 
     const formData = new FormData(e.target)
     console.log(formData)
-
     for (const [key, value] of formData.entries()) {
       console.log(key, value)
     }
-
     const result = await addPost(formData)
   }
+
+  const handleAddTag = () => {}
+
+  const handleRemoveTag = (tag) => {}
 
   return (
     <div className="u-main-container bg-white p-7 mt-32 mb-44">
@@ -32,6 +37,49 @@ const page = () => {
           placeholder="Title"
           required
         />
+
+        <div className="mb-10">
+          <label className="f-label" htmlFor="tag">
+            Add a tag(s) (optional, max5)
+          </label>
+          <div className="flex">
+            <input
+              type="text"
+              className="shadow border rounded p-3 text-gray-700 focus:outline-slate-400"
+              name="tag"
+              id="tag"
+              placeholder="add a tag"
+              ref={tagInputRef}
+            />
+            <button
+              className="bg-indigo-500 hover:bg-indigo-700 text-white font-bold p-4 rounded mx-4"
+              onClick={handleAddTag}
+              type="button"
+            >
+              Add
+            </button>
+            <div className="flex items-center grow whitespace-normal overflow-y-auto shadow border rounded px-3">
+              {tags.map((tag) => {
+                return (
+                  <span
+                    key={tag}
+                    className="inline-block whitespace-nowrap bg-gray-200 text-gray-700 rounded-full px-3 py-1 text-sm font-semibold mr-2"
+                  >
+                    {tag}
+                    <button
+                      type="button"
+                      onClick={() => handleRemoveTag(tag)}
+                      className="text-red-500 ml-2"
+                    >
+                      &times;
+                    </button>
+                  </span>
+                )
+              })}
+            </div>
+          </div>
+        </div>
+
         <label htmlFor="markdownArticle" className="f-label">
           Write your article using Markdown - do not repeat the title above
         </label>
