@@ -4,6 +4,11 @@ import { Tag } from "@/lib/models/tags"
 import { connectToDb } from "@/lib/utils/db/connectToDb"
 import { marked } from "marked"
 import slugify from "slugify"
+import { JSDOM } from "jsdom"
+import createDOMPurify from "dompurify"
+
+const window = new JSDOM("").window
+const DOMPurify = createDOMPurify(window)
 
 export const addPost = async (formData) => {
   const { title, markdownArticle, tags } = Object.fromEntries(formData)
@@ -33,6 +38,8 @@ export const addPost = async (formData) => {
 
     // Markdown Management
     let markdownHTMLResult = marked(markdownArticle)
+    markdownHTMLResult = DOMPurify.sanitize(markdownHTMLResult)
+    console.log(markdownHTMLResult)
 
     const newPost = new Post({
       title,
