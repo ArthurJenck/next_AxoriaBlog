@@ -1,6 +1,7 @@
 import { getPost } from "@/lib/serverMethods/blog/postMethods"
 import Link from "next/link"
 import React from "react"
+import "./article-styles.css"
 
 const page = async ({ params }) => {
   const { slug } = await params
