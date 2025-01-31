@@ -1,11 +1,15 @@
 import { Post } from "@/lib/models/post"
 import { connectToDb } from "@/lib/utils/db/connectToDb"
+import { Tag } from "@/lib/models/tags"
 
 export const getPost = async (slug) => {
   try {
     await connectToDb()
 
-    const post = await Post.findOne({ slug })
+    const post = await Post.findOne({ slug }).populate({
+      path: "tags",
+      select: "name slug"
+    })
     return post
   } catch (error) {
     console.error("Error while fetching post", error)
@@ -18,7 +22,6 @@ export const getPosts = async () => {
     await connectToDb()
 
     const posts = await Post.find()
-    console.log("post: ", post)
     return posts
   } catch (error) {
     console.error("Failed to get posts")
