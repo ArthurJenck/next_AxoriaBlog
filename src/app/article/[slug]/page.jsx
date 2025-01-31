@@ -22,7 +22,10 @@ const page = async ({ params }) => {
           )
         })}
       </p>
-      <p>{post.markdownArticle}</p>
+      <div
+        className="article-styles"
+        dangerouslySetInnerHTML={{ __html: post.markdownHTMLResult }}
+      ></div>
     </main>
   )
 }

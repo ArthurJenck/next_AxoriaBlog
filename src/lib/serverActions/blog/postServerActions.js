@@ -2,6 +2,7 @@
 import { Post } from "@/lib/models/post"
 import { Tag } from "@/lib/models/tags"
 import { connectToDb } from "@/lib/utils/db/connectToDb"
+import { marked } from "marked"
 import slugify from "slugify"
 
 export const addPost = async (formData) => {
@@ -30,9 +31,13 @@ export const addPost = async (formData) => {
       })
     )
 
+    // Markdown Management
+    let markdownHTMLResult = marked(markdownArticle)
+
     const newPost = new Post({
       title,
       markdownArticle,
+      markdownHTMLResult,
       tags: tagIds
     })
 
