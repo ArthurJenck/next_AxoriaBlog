@@ -10,6 +10,8 @@ const page = () => {
     e.preventDefault()
 
     const formData = new FormData(e.target)
+    formData.set("tags", JSON.stringify(tags))
+
     const result = await addPost(formData)
   }
 

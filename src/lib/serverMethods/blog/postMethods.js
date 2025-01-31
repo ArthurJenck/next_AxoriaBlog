@@ -18,6 +18,7 @@ export const getPosts = async () => {
     await connectToDb()
 
     const posts = await Post.find()
+    console.log("post: ", post)
     return posts
   } catch (error) {
     console.error("Failed to get posts")
