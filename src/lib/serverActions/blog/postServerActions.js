@@ -6,6 +6,11 @@ import { marked } from "marked"
 import slugify from "slugify"
 import { JSDOM } from "jsdom"
 import createDOMPurify from "dompurify"
+import Prism from "prismjs"
+import { markedHighlight } from "marked-highlight"
+import "prismjs/components/prism-markup"
+import "prismjs/components/prism-css"
+import "prismjs/components/prism-javascript"
 
 const window = new JSDOM("").window
 const DOMPurify = createDOMPurify(window)
@@ -37,6 +42,24 @@ export const addPost = async (formData) => {
     )
 
     // Markdown Management
+    marked.use(
+      markedHighlight({
+        highlight: (code, language) => {
+          const validLanguage = Prism.languages[language]
+            ? language
+            : "plaintext"
+
+          return Prism.highlight(
+            code,
+            Prism.languages[validLanguage],
+            validLanguage
+          )
+        }
+      })
+    )
+
+    // console.log(markdownArticle)
+
     let markdownHTMLResult = marked(markdownArticle)
     markdownHTMLResult = DOMPurify.sanitize(markdownHTMLResult)
     console.log(markdownHTMLResult)
