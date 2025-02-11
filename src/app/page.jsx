@@ -3,8 +3,6 @@ import { connectToDb } from "@/lib/utils/db/connectToDb"
 import Link from "next/link"
 
 export default async function Home() {
-  connectToDb()
-
   const posts = await getPosts()
 
   return (

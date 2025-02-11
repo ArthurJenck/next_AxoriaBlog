@@ -1,12 +1,32 @@
 "use client"
+import { login } from "@/lib/serverActions/session/sessionServerActions"
+import { useRouter } from "next/navigation"
 import React, { useRef } from "react"
 
 const page = () => {
   const submitBtnRef = useRef(null)
   const serverInfoRef = useRef(null)
 
+  const router = useRouter()
+
   const handleSubmit = async (e) => {
     e.preventDefault()
+
+    serverInfoRef.current.textContent = ""
+    submitBtnRef.current.disabled = true
+
+    try {
+      const result = await login(new FormData(e.target))
+
+      if (result.success) {
+        router.push("/")
+      }
+    } catch (error) {
+      submitBtnRef.current.textContent = "Submit"
+      submitBtnRef.current.disabled = false
+      serverInfoRef.current.textContent = `${error.message}`
+      console.error("Error while logging in:", error)
+    }
   }
 
   return (
@@ -26,7 +46,7 @@ const page = () => {
         Your password
       </label>
       <input
-        type="text"
+        type="password"
         name="password"
         id="password"
         placeholder="Your password"

@@ -58,11 +58,8 @@ export const addPost = async (formData) => {
       })
     )
 
-    // console.log(markdownArticle)
-
     let markdownHTMLResult = marked(markdownArticle)
     markdownHTMLResult = DOMPurify.sanitize(markdownHTMLResult)
-    console.log(markdownHTMLResult)
 
     const newPost = new Post({
       title,

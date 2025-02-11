@@ -83,7 +83,7 @@ export const login = async (formData) => {
 
     await session.save()
 
-    const cookieStore = cookies()
+    const cookieStore = await cookies()
     cookieStore.set("sessionId", session._id.toString(), {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",

@@ -42,7 +42,7 @@ const page = () => {
       submitBtnRef.current.textContent = "Submit"
       submitBtnRef.current.disabled = false
       serverInfoRef.current.textContent = `${error.message}`
-      console.error("Error while creating post:", error)
+      console.error("Error while registering:", error)
     }
   }
 
