@@ -46,9 +46,9 @@ const page = () => {
         }, 1000)
       }
     } catch (error) {
-      serverValidationText.current.textContent = "Submit"
-      submitBtnRef.current.textContent = `${error.message}`
+      submitBtnRef.current.textContent = "Submit"
       submitBtnRef.current.disabled = false
+      serverValidationText.current.textContent = `${error.message}`
       console.error("Error while creating post:", error)
     }
   }

@@ -1,7 +1,10 @@
+"use server"
 import { connectToDb } from "@/lib/utils/db/connectToDb"
 import slugify from "slugify"
+import bcrypt from "bcryptjs"
+import { User } from "@/lib/models/user"
 
-export const registe = async (formData) => {
+export const register = async (formData) => {
   const { userName, email, password, confirmPassword } =
     Object.fromEntries(formData)
 
@@ -19,7 +22,6 @@ export const registe = async (formData) => {
     connectToDb()
 
     const user = await User.findOne({ userName })
-
     if (user) {
       throw new Error("Username already exists")
     }

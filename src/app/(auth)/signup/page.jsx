@@ -1,15 +1,58 @@
+"use client"
+import { register } from "@/lib/serverActions/session/sessionServerActions"
 import Link from "next/link"
-import React from "react"
+import { useRouter } from "next/navigation"
+import React, { useRef } from "react"
 
 const page = () => {
+  const serverInfoRef = useRef(null)
+  const submitBtnRef = useRef(null)
+  const router = useRouter()
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+
+    serverInfoRef.current.classList.add("hidden")
+    serverInfoRef.current.textContent = ""
+    submitBtnRef.current.textContent = "Saving user..."
+    submitBtnRef.current.disabled = true
+
+    try {
+      const result = await register(new FormData(e.target))
+
+      if (result.success) {
+        submitBtnRef.current.textContent = "User created ✅"
+
+        let countdown = 3
+        serverInfoRef.current.classList.remove("hidden")
+        serverInfoRef.current.textContent = `Redirecting in ${countdown}...`
+
+        const interval = setInterval(() => {
+          countdown -= 1
+          serverInfoRef.current.textContent = `Redirecting in ${countdown}...`
+
+          if (countdown === 0) {
+            clearInterval(interval)
+            router.push(`/signin`)
+          }
+        }, 1000)
+      }
+    } catch (error) {
+      submitBtnRef.current.textContent = "Submit"
+      submitBtnRef.current.disabled = false
+      serverInfoRef.current.textContent = `${error.message}`
+      console.error("Error while creating post:", error)
+    }
+  }
+
   return (
-    <form className="max-w-md mx-auto mt-32">
+    <form onSubmit={handleSubmit} className="max-w-md mx-auto mt-32">
       <label htmlFor="userName" className="f-label">
         Name or pseudo
       </label>
       <input
         type="text"
-        name="username"
+        name="userName"
         id="userName"
         placeholder="Name or pseudo"
         required
@@ -49,9 +92,13 @@ const page = () => {
         className="f-auth-input block"
       />
 
-      <button className="w-full bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-3 rounded mt-10 mb-5">
+      <button
+        ref={submitBtnRef}
+        className="w-full bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-3 rounded mt-10 mb-5"
+      >
         Submit
       </button>
+      <p ref={serverInfoRef} className="text-center mb-10 hidden"></p>
       <Link
         href="/signin"
         className="mb-10 underline text-blue-600 block text-center"
