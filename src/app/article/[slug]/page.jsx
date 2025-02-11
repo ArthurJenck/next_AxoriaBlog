@@ -2,6 +2,7 @@ import { getPost } from "@/lib/serverMethods/blog/postMethods"
 import Link from "next/link"
 import React from "react"
 import "./article-styles.css"
+import "prism-themes/themes/prism-vsc-dark-plus.css"
 
 const page = async ({ params }) => {
   const { slug } = await params

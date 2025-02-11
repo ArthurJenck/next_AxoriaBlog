@@ -11,11 +11,17 @@
   li,
   p {
     font-size: 18px;
-  }
-  p {
     margin-bottom: 0.5rem;
   }
   li {
     margin-bottom: 4px;
+  }
+  pre {
+    margin: 1.25rem 0;
+    padding: 1.5rem 1.5rem 2rem;
+    background-color: #060606;
+    code {
+      font-size: 18px;
+    }
   }
 }
