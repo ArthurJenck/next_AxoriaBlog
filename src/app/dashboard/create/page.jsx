@@ -1,18 +1,56 @@
 "use client"
 import { addPost } from "@/lib/serverActions/blog/postServerActions"
+import { useRouter } from "next/navigation"
 import React, { useRef, useState } from "react"
 
 const page = () => {
   const [tags, setTags] = useState([])
+
+  const router = useRouter()
+
   const tagInputRef = useRef(null)
+  const submitBtnRef = useRef(null)
+  const serverValidationText = useRef(null)
 
   const handleSubmit = async (e) => {
     e.preventDefault()
 
     const formData = new FormData(e.target)
     formData.set("tags", JSON.stringify(tags))
+    // console.log(formData)
 
-    const result = await addPost(formData)
+    // for (const [key, value] of formData.entries()) {
+    //   console.log(key, value)
+    // }
+
+    serverValidationText.current.textContent = ""
+    submitBtnRef.current.textContent = "Saving Post..."
+    submitBtnRef.current.disabled = true
+
+    try {
+      const result = await addPost(formData)
+
+      if (result.success) {
+        submitBtnRef.current.textContent = "Post Saved ✅"
+        let countdown = 3
+        serverValidationText.current.textContent = `Redirecting in ${countdown}...`
+
+        const interval = setInterval(() => {
+          countdown -= 1
+          serverValidationText.current.textContent = `Redirecting in ${countdown}...`
+
+          if (countdown === 0) {
+            clearInterval(interval)
+            router.push(`/article/${result.slug}`)
+          }
+        }, 1000)
+      }
+    } catch (error) {
+      serverValidationText.current.textContent = "Submit"
+      submitBtnRef.current.textContent = `${error.message}`
+      submitBtnRef.current.disabled = false
+      console.error("Error while creating post:", error)
+    }
   }
 
   const handleAddTag = () => {
@@ -110,9 +148,13 @@ const page = () => {
           required
           className="min-h-44 text-xl shadow appearance-none border rounded w-full p-8 text-gray-700 mb-4 focus:outline-slate-400"
         ></textarea>
-        <button className="min-w-44 bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded border-none mb-4 ">
+        <button
+          ref={submitBtnRef}
+          className="min-w-44 bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded border-none mb-4 "
+        >
           Submit
         </button>
+        <p ref={serverValidationText}></p>
       </form>
     </div>
   )
