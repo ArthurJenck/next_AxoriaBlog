@@ -7,6 +7,7 @@ import React, { useRef } from "react"
 const page = () => {
   const serverInfoRef = useRef(null)
   const submitBtnRef = useRef(null)
+
   const router = useRouter()
 
   const handleSubmit = async (e) => {
@@ -92,10 +93,7 @@ const page = () => {
         className="f-auth-input block"
       />
 
-      <button
-        ref={submitBtnRef}
-        className="w-full bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-3 rounded mt-10 mb-5"
-      >
+      <button ref={submitBtnRef} className="f-auth-submit">
         Submit
       </button>
       <p ref={serverInfoRef} className="text-center mb-10 hidden"></p>

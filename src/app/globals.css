@@ -36,3 +36,7 @@ body {
 .f-auth-input {
   @apply shadow appearance-none border rounded w-full p-3 text-gray-700 leading-snug mb-5 focus:outline-slate-400;
 }
+
+.f-auth-submit {
+  @apply w-full bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-3 rounded mt-6 mb-10;
+}
