@@ -3,10 +3,22 @@ import slugify from "slugify"
 
 const postSchema = new mongoose.Schema(
   {
-    title: { type: String, required: true },
-    markdownArticle: { type: String, required: true },
-    markdownHTMLResult: { type: String, required: true },
-    slug: { type: String, unique: true },
+    title: {
+      type: String,
+      required: true
+    },
+    markdownArticle: {
+      type: String,
+      required: true
+    },
+    markdownHTMLResult: {
+      type: String,
+      required: true
+    },
+    slug: {
+      type: String,
+      unique: true
+    },
     tags: [
       {
         type: mongoose.Schema.Types.ObjectId,
