@@ -14,8 +14,8 @@ export const Navbar = () => {
         <Link href="/dashboard/create" className="mx-2 text-zinc-900">
           Add an article
         </Link>
-        <Link href="/signin" className="mx-2 text-zinc-900">
-          Sign in
+        <Link href="/login" className="mx-2 text-zinc-900">
+          Log in
         </Link>
         <Link href="/signup" className="mx-2 text-zinc-900">
           Sign up

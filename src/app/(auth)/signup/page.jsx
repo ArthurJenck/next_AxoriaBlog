@@ -34,7 +34,7 @@ const page = () => {
 
           if (countdown === 0) {
             clearInterval(interval)
-            router.push(`/signin`)
+            router.push(`/login`)
           }
         }, 1000)
       }
